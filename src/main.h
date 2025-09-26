@@ -43,11 +43,17 @@ extern LGFX_Sprite fpsCanvas;
 uint16_t bgColor = TFT_BLACK;
 uint16_t lastbgColor = bgColor;
 
+float cameraPos[3] = {0, 0, 1000};
+float lightPos[3] = {-30, 40, 50};
+
+bool buttonUp = true;
+
 struct Face
 {
     uint8_t indices[4];
     float faceCenter[3];
-    float normalDir;
+    float normalAngle;
+    float normal[3];
     float avgDepth;
     uint8_t colorID; // Farbe speichern
 };
@@ -70,13 +76,12 @@ _3DObject o_ball;
 _3DObject o_cube;
 _3DObject o_cone;
 
-float cameraPos[3] = {0, 0, 100};
-float lightPos[3] = {-3, 4, 5};
-
 void project3DTo2D(int16_t projected[][2], float depth[], _3DObject obj);
 
 void drawWiredObject(LGFX_Sprite sprite, _3DObject obj, uint16_t color = TFT_WHITE);
-void drawFilledObject(LGFX_Sprite sprite, _3DObject obj, bool overwriteColor = false, uint16_t color = TFT_BLACK);
+
+// Sprite, Object, colorMode (0 = default 1 = normals 2 = overwrite), overwrite Color
+void drawFilledObject(LGFX_Sprite sprite, _3DObject obj, uint8_t colorMode = false, uint16_t color = TFT_BLACK);
 
 void rotateNormal(_3DObject obj, const float normal[3], float rotatedNormal[3]);
 float normalAngle(const float normal[3], const float faceCenter[3], const float sourcePos[3]);

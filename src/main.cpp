@@ -28,7 +28,7 @@ void setup()
   fpsCanvas.setColorDepth(16);
   fpsCanvas.createSprite(18, 8);
 
-  mode = 5;
+  mode = 0;
 
   o_n641.model = m_n64;
   o_n642.model = m_n64;
@@ -73,11 +73,19 @@ void loop()
 
   if (digitalRead(BUTTON_PIN) == LOW)
   {
-    mode++;
-    if (mode == 19)
-      mode = 0;
-    tft.fillScreen(bgColor);
-    delay(100);
+    if (buttonUp)
+    {
+      mode++;
+      if (mode == 18)
+        mode = 0;
+      tft.fillScreen(bgColor);
+      buttonUp = false;
+      // delay(100);
+    }
+  }
+  else
+  {
+    buttonUp = true;
   }
 
   if (bgColor != lastbgColor)
@@ -89,55 +97,24 @@ void loop()
   switch (mode)
   {
   case 0:
-    bgColor = TFT_BLACK;
+    bgColor = TFT_WHITE;
     drawFilledObject(canvasL, o_n641);
     canvasL.pushSprite(80, canvYoffset);
     break;
 
   case 1:
-    bgColor = TFT_BLACK;
-    drawWiredObject(canvasL, o_n641);
+    bgColor = TFT_WHITE;
+    drawFilledObject(canvasL, o_n641, 1);
     canvasL.pushSprite(80, canvYoffset);
     break;
 
   case 2:
-    bgColor = TFT_BLACK;
-    o_n641.x = 80;
-    o_n642.x = -80;
-    drawFilledObject(canvasL, o_n641);
-    drawWiredObject(canvasR, o_n642, TFT_WHITE);
-    canvasL.pushSprite(0, canvYoffset);
-    canvasR.pushSprite(CANV_W, canvYoffset);
+    bgColor = TFT_WHITE;
+    drawWiredObject(canvasL, o_n641, TFT_BLACK);
+    canvasL.pushSprite(80, canvYoffset);
     break;
 
   case 3:
-    bgColor = TFT_BLACK;
-    drawFilledObject(canvasL, o_n641);
-    drawWiredObject(canvasR, o_n641);
-    canvasL.pushSprite(0, canvYoffset);
-    canvasR.pushSprite(CANV_W, canvYoffset);
-    break;
-
-  case 4:
-    bgColor = TFT_BLACK;
-    drawFilledObject(canvasL, o_n641);
-    drawWiredObject(canvasL, o_n641, TFT_BLACK);
-    canvasL.pushSprite(80, canvYoffset);
-    break;
-
-  case 5:
-    bgColor = TFT_WHITE;
-    drawFilledObject(canvasL, o_n641);
-    canvasL.pushSprite(80, canvYoffset);
-    break;
-
-  case 6:
-    bgColor = TFT_WHITE;
-    drawWiredObject(canvasL, o_n641, TFT_BLACK);
-    canvasL.pushSprite(80, canvYoffset);
-    break;
-
-  case 7:
     bgColor = TFT_WHITE;
     o_n641.x = 80;
     o_n642.x = -80;
@@ -147,7 +124,7 @@ void loop()
     canvasR.pushSprite(CANV_W, canvYoffset);
     break;
 
-  case 8:
+  case 4:
     bgColor = TFT_WHITE;
     drawFilledObject(canvasL, o_n641);
     drawWiredObject(canvasR, o_n641, TFT_BLACK);
@@ -155,14 +132,68 @@ void loop()
     canvasR.pushSprite(CANV_W, canvYoffset);
     break;
 
-  case 9:
+  case 5:
     bgColor = TFT_WHITE;
     drawFilledObject(canvasL, o_n641);
     drawWiredObject(canvasL, o_n641, TFT_BLACK);
     canvasL.pushSprite(80, canvYoffset);
     break;
 
+  case 6:
+    bgColor = TFT_WHITE;
+    drawFilledObject(canvasL, o_cube);
+    canvasL.pushSprite(80, canvYoffset);
+    break;
+
+  case 7:
+    bgColor = TFT_WHITE;
+    drawFilledObject(canvasL, o_cube, 1);
+    canvasL.pushSprite(80, canvYoffset);
+    break;
+
+  case 8:
+    bgColor = TFT_WHITE;
+    drawWiredObject(canvasL, o_cube, TFT_BLACK);
+    canvasL.pushSprite(80, canvYoffset);
+    break;
+
+  case 9:
+    bgColor = TFT_WHITE;
+    drawFilledObject(canvasL, o_cone);
+    canvasL.pushSprite(80, canvYoffset);
+    break;
+
   case 10:
+    bgColor = TFT_WHITE;
+    drawFilledObject(canvasL, o_cone, 1);
+    canvasL.pushSprite(80, canvYoffset);
+    break;
+
+  case 11:
+    bgColor = TFT_WHITE;
+    drawWiredObject(canvasL, o_cone, TFT_BLACK);
+    canvasL.pushSprite(80, canvYoffset);
+    break;
+
+  case 12:
+    bgColor = TFT_WHITE;
+    drawFilledObject(canvasL, o_ball);
+    canvasL.pushSprite(80, canvYoffset);
+    break;
+
+  case 13:
+    bgColor = TFT_WHITE;
+    drawFilledObject(canvasL, o_ball, 1);
+    canvasL.pushSprite(80, canvYoffset);
+    break;
+
+  case 14:
+    bgColor = TFT_WHITE;
+    drawWiredObject(canvasL, o_ball, TFT_BLACK);
+    canvasL.pushSprite(80, canvYoffset);
+    break;
+
+  case 15:
     bgColor = TFT_WHITE;
 
     o_n641.x = -40;
@@ -188,7 +219,7 @@ void loop()
     canvasL.pushSprite(80, canvYoffset);
     break;
 
-  case 11:
+  case 16:
     bgColor = TFT_WHITE;
 
     o_n641.x = -40;
@@ -221,42 +252,12 @@ void loop()
     canvasR.pushSprite(CANV_W, canvYoffset);
     break;
 
-  case 12:
-    bgColor = TFT_CYAN;
-    
-    o_n641.scale = 43;
-    drawFilledObject(canvasL, o_n641, true, TFT_BLACK);
-    drawFilledObject(canvasL, o_n642);
-    canvasL.pushSprite(80, canvYoffset);
-    break;
-  case 13:
-    bgColor = TFT_WHITE;
-    drawFilledObject(canvasL, o_ball);
-    canvasL.pushSprite(80, canvYoffset);
-    break;
-  case 14:
-    bgColor = TFT_WHITE;
-    drawFilledObject(canvasL, o_cone);
-    canvasL.pushSprite(80, canvYoffset);
-    break;
-  case 15:
-    bgColor = TFT_WHITE;
-    drawFilledObject(canvasL, o_cube);
-    canvasL.pushSprite(80, canvYoffset);
-    break;
-  case 16:
-    bgColor = TFT_WHITE;
-    drawWiredObject(canvasL, o_ball, TFT_BLACK);
-    canvasL.pushSprite(80, canvYoffset);
-    break;
   case 17:
-    bgColor = TFT_WHITE;
-    drawWiredObject(canvasL, o_cone, TFT_BLACK);
-    canvasL.pushSprite(80, canvYoffset);
-    break;
-  case 18:
-    bgColor = TFT_WHITE;
-    drawWiredObject(canvasL, o_cube, TFT_BLACK);
+    bgColor = TFT_CYAN;
+
+    o_n641.scale = 43;
+    drawFilledObject(canvasL, o_n641, 2, TFT_BLACK);
+    drawFilledObject(canvasL, o_n642);
     canvasL.pushSprite(80, canvYoffset);
     break;
   }
@@ -334,7 +335,7 @@ void drawWiredObject(LGFX_Sprite sprite, _3DObject obj, uint16_t color)
   }
 }
 
-void drawFilledObject(LGFX_Sprite sprite, _3DObject obj, bool overwriteColor, uint16_t color)
+void drawFilledObject(LGFX_Sprite sprite, _3DObject obj, uint8_t colorMode, uint16_t color)
 {
   int16_t projected[obj.model.numVerts][2];
   float depth[obj.model.numVerts];
@@ -382,7 +383,10 @@ void drawFilledObject(LGFX_Sprite sprite, _3DObject obj, bool overwriteColor, ui
     float rotatedNormal[3];
     rotateNormal(obj, obj.model.normals[i], rotatedNormal);
 
-    sortedFaces[i].normalDir = normalAngle(rotatedNormal, faceCenter, lightPos);
+    sortedFaces[i].normalAngle = normalAngle(rotatedNormal, faceCenter, lightPos);
+    sortedFaces[i].normal[0] = (rotatedNormal[0] + 1) / 2 * 255;
+    sortedFaces[i].normal[1] = ((rotatedNormal[1] + 1) / 2 * 255) * -1;
+    sortedFaces[i].normal[2] = ((rotatedNormal[2] + 1.01) / 2 * 255) * -1;
 
     if (normalAngle(rotatedNormal, faceCenter, cameraPos) < 0)
     {
@@ -406,15 +410,19 @@ void drawFilledObject(LGFX_Sprite sprite, _3DObject obj, bool overwriteColor, ui
 
     uint16_t col;
 
-    if (overwriteColor)
+    if (colorMode > 2) colorMode = 0;
+
+    switch (colorMode)
     {
+    case 0:
+      col = shadeColor(obj.model.colors[sortedFaces[i].colorID], sortedFaces[i].normalAngle);
+      break;
+    case 1:
+      col = lgfx::color565(sortedFaces[i].normal[0], sortedFaces[i].normal[1], sortedFaces[i].normal[2]);
+      break;
+    case 2:
       col = color;
-    }
-    else
-    {
-      float f = sortedFaces[i].normalDir;
-      uint16_t baseCol = obj.model.colors[sortedFaces[i].colorID];
-      col = shadeColor(baseCol, f);
+      break;
     }
 
     sprite.fillTriangle(projected[p1][0], projected[p1][1],
@@ -473,13 +481,10 @@ float normalAngle(const float normal[3], const float faceCenter[3], const float 
 inline uint16_t shadeColor(uint16_t baseColor, float factor)
 {
 
-  if (factor < 0) factor = 0;
-  if (factor > 1) factor = 1;
-
-  float minBrightness = 0.2f;
-  float maxBrightness = 1.3f;
-
-  float brightness = minBrightness + factor * (maxBrightness - minBrightness);
+  if (factor < 0)
+    factor = 0;
+  if (factor > 1)
+    factor = 1;
 
   // RGB565 -> R,G,B (8bit)
   uint8_t r = ((baseColor >> 11) & 0x1F) << 3;
