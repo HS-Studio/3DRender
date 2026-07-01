@@ -11,13 +11,16 @@ void setup()
   delay(1000);
   Serial.println("Starting...");
   Serial.println();
+  
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
   tft.begin();
-  tft.invertDisplay(true);
+  tft.invertDisplay(false);
   tft.setRotation(1);
   tft.fillScreen(TFT_BLACK);
+
+  Serial.printf("Screen:\nwidth %d\nheight %d", tft.width(), tft.height());
 
   canvasL.setColorDepth(16);
   canvasL.createSprite(CANV_W, CANV_H);
@@ -64,7 +67,7 @@ void loop()
       fpsCanvas.setTextColor(TFT_DARKGRAY);
       fpsCanvas.setTextSize(1);
       fpsCanvas.print(fps);
-      fpsCanvas.pushSprite(0, 0);
+      fpsCanvas.pushSprite(50, 0);
       // Zurücksetzen des Zählers und der Zeit
       fpsCounter = 0;
       fpsMillis = currentMillis;

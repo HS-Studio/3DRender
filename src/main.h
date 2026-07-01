@@ -10,8 +10,10 @@
 
 #include <Arduino.h>
 #include <SPI.h>
+
 // #include <SD.h>
-#include "LGFX_SPI_ILI9341.h"
+// #include "LGFX_SPI_ILI9341.h"
+#include "LGFX_SPI_ST7789.h"
 
 // 3D-Objects
 #include "models\cube.h"
